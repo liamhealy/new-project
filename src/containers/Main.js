@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import Landing from '../components/Landing';
 import SignIn from '../components/SignIn';
-import { Switch, Route } from 'react-router-dom';
-import { Redirect, withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import { toggleDarkMode, signIn } from '../actions/actions';
+import { Switch, Route, withRouter } from 'react-router-dom';
  
 class Main extends Component {
 
@@ -17,31 +14,35 @@ class Main extends Component {
 
     renderSignIn = () => {
         if (this.props.signedIn) {
-            return <Redirect to="/liam" />
+            this.props.history.push("/liam")
+        } else {
+            return <SignIn userSignIn={this.userSignIn} />
         }
-        return <SignIn userSignIn={this.userSignIn} />
     }
 
     renderLanding = () => {
         return <Landing />
     }
 
+    handleEmptyRoute = () => {
+        if (this.props.signedIn) {
+            this.props.history.push("/liam")
+        } else {
+            this.props.history.push("/sign-in")
+        }
+    } 
+
     render() {
+        console.log("in main")
         return (
-            <Switch>
-                <Route exact path="/sign-in" render={this.renderSignIn} />
-                <Route exact path="/:username" render={this.renderLanding} />
-                {/* <Route path="/" render={this.renderSignIn} /> */}
-            </Switch>
+            <div>
+                <Switch>
+                    <Route exact path="/:username" render={this.renderLanding} />
+                    <Route path="/sign-in" render={this.renderSignIn} />
+                </Switch>
+            </div>
         )
     }
 }
 
-function msp(state) {
-    return {
-        signedIn: state.signedIn,
-        darkMode: state.darkMode
-    }
-}
-
-export default connect(msp, {toggleDarkMode, signIn})(withRouter(Main));
+export default withRouter(Main);

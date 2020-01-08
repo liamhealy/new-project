@@ -4,7 +4,8 @@ import Container from '@material-ui/core/Container';
 import NavBar from './NavBar';
 import Cards from './Cards';
 
-export default function Landing() {
+export default function Landing(props) {
+  console.log(props);
   return (
     <React.Fragment>
       <CssBaseline />

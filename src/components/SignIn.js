@@ -12,8 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-import { toggleDarkMode, signIn } from '../actions/actions';
 
 function Copyright() {
   return (
@@ -141,11 +139,4 @@ function SignIn(props) {
   );
 }
 
-function msp(state) {
-  return {
-      signedIn: state.signedIn,
-      darkMode: state.darkMode
-  }
-}
-
-export default connect(msp, { toggleDarkMode, signIn })(SignIn)
+export default SignIn
