@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Landing from '../components/Landing';
 import SignIn from '../components/SignIn';
-import { Switch, Route, withRouter } from 'react-router';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 class Main extends Component {
 
@@ -23,6 +23,7 @@ class Main extends Component {
             <Switch>
                 <Route exact path="/sign-in" render={this.renderSignIn} />
                 <Route exact path="/:username" render={this.renderLanding} />
+                <Route path="/" render={this.renderSignIn} />
             </Switch>
         )
     }
