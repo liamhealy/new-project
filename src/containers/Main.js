@@ -2,47 +2,55 @@ import React, { Component } from 'react';
 import Landing from '../components/Landing';
 import SignIn from '../components/SignIn';
 import { Switch, Route, withRouter } from 'react-router-dom';
- 
+import { connect } from 'react-redux';
+import { toggleDarkMode, signIn } from '../actions/actions.js';
+
 class Main extends Component {
 
-    userSignIn = () => {
-        // const defaultUser = "liam";
-        // this.props.history.push(`/${defaultUser}`);
-        // return <Redirect to={`/${defaultUser}`} />
-        this.props.signIn()
-    }
+	componentDidUpdate(prevProps) {
+		if (this.props.user !== prevProps.user) {
+			this.props.history.push(`${this.props.user.email.split('@')[0]}`)
+		}
+	}
 
-    renderSignIn = () => {
-        if (this.props.signedIn) {
-            this.props.history.push("/liam")
-        } else {
-            return <SignIn userSignIn={this.userSignIn} />
-        }
-    }
+	userSignIn = (email, password) => {
+		this.props.signIn(email, password)
+	}
 
-    renderLanding = () => {
-        return <Landing />
-    }
+	manageSignIn = () => {
+		console.log('here', this.props)
+		return <SignIn userSignIn={this.userSignIn} />
+	}
 
-    handleEmptyRoute = () => {
-        if (this.props.signedIn) {
-            this.props.history.push("/liam")
-        } else {
-            this.props.history.push("/sign-in")
-        }
-    } 
+	renderLanding = () => {
+		return <Landing />
+	}
 
-    render() {
-        console.log("in main")
-        return (
-            <div>
-                <Switch>
-                    <Route exact path="/:username" render={this.renderLanding} />
-                    <Route path="/sign-in" render={this.renderSignIn} />
-                </Switch>
-            </div>
-        )
-    }
+	handleEmptyRoute = () => {
+		if (this.props.signedIn) {
+			this.props.history.push("/liam")
+		} else {
+			this.props.history.push("/sign-in")
+		}
+	} 
+
+	render() {
+		return (
+			<div>
+				<Switch>
+					<Route exact path="/sign-in" render={this.manageSignIn} />
+					<Route exact path="/:username" render={this.renderLanding} />
+				</Switch>
+			</div>
+		)
+	}
 }
 
-export default withRouter(Main);
+function msp(state) {
+	return {
+		user: state.user,
+		interface: state.interface
+	}
+}
+
+export default connect(msp, {toggleDarkMode, signIn})(withRouter(Main));

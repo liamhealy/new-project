@@ -3,8 +3,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import NavBar from './NavBar';
 import Cards from './Cards';
+import { connect } from 'react-redux';
+import { toggleDarkMode, signIn } from '../actions/actions.js';
 
-export default function Landing(props) {
+function Landing(props) {
   console.log(props);
   return (
     <React.Fragment>
@@ -16,3 +18,14 @@ export default function Landing(props) {
     </React.Fragment>
   );
 }
+
+export default Landing;
+
+// function msp(state) {
+//   return {
+//     signedIn: state.signedIn,
+//     darkMode: state.darkMode
+//   }
+// }
+
+// export default connect(msp, {toggleDarkMode, signIn})(Landing)

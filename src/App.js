@@ -18,8 +18,8 @@ function App() {
 
 function msp(state) {
   return {
-    signedIn: state.signedIn,
-    darkMode: state.darkMode
+    user: state.user,
+    interface: state.interface
   }
 }
 

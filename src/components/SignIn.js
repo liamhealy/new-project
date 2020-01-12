@@ -12,13 +12,15 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { toggleDarkMode, signIn } from '../actions/actions.js';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Liam Healy
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -66,7 +68,9 @@ function SignIn(props) {
   const proceedToMain = (event) => {
     event.preventDefault();
     event.persist();
-    props.userSignIn();
+    if (event.target[0].value && event.target[2].value) {
+      props.userSignIn(event.target[0].value, event.target[2].value);
+    }
   }
 
   return (
@@ -139,4 +143,11 @@ function SignIn(props) {
   );
 }
 
-export default SignIn
+function msp(state) {
+  return {
+    user: state.user,
+    interface: state.interface
+  }
+}
+
+export default connect(msp, { toggleDarkMode, signIn })(SignIn)
