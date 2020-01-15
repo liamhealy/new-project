@@ -17,7 +17,7 @@ class Main extends Component {
 		this.props.signIn(email, password)
 	}
 
-	manageSignIn = () => {
+	renderSignIn = () => {
 		console.log('here', this.props)
 		return <SignIn userSignIn={this.userSignIn} />
 	}
@@ -35,11 +35,13 @@ class Main extends Component {
 	} 
 
 	render() {
+		console.log('here')
 		return (
 			<div>
 				<Switch>
-					<Route exact path="/sign-in" render={this.manageSignIn} />
+					<Route exact path="/sign-in" render={this.renderSignIn} />
 					<Route exact path="/:username" render={this.renderLanding} />
+					<Route render={this.renderSignIn} />
 				</Switch>
 			</div>
 		)
