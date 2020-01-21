@@ -1,138 +1,110 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import Form from 'react-bootstrap/Form'
+import Title from './Title';
+import { connect } from 'react-redux';
+import { toggleDarkMode, createAccount } from '../actions/actions.js';
+import styled from 'styled-components';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+class SignIn extends Component{
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: '100vh',
-  },
-  image: {
-    backgroundImage: 'url(https://insights.dice.com/wp-content/uploads/2018/05/Cryptocurrency-Bitcoin-Blockchian-Dice.jpg)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-
-export default function SignIn(props) {
-  const classes = useStyles();
+  state = {
+    email: "",
+    first_name: "",
+    last_name: "",
+    password: ""
+  }
   
-  const proceedToMain = (event) => {
+  proceedToMain = (event) => {
     event.preventDefault();
     event.persist();
-    props.userSignIn();
+    this.props.userSignIn(this.state);
   }
 
-  return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} onSubmit={proceedToMain} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
-  );
+  handleChange = (e) => {
+    e.persist();
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  render() {
+    return (
+      <Page>
+        <FormDiv>
+            <Title>{'< manage-buddy >'}</Title>
+          <FormPaper>
+            <Form onSubmit={this.proceedToMain}>
+              <FormHeader>Create an account</FormHeader>
+              <Form.Group>
+                <Form.Control type="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange} />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control type="text" placeholder="First Name" name="first_name" value={this.state.first_name} onChange={this.handleChange} />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control type="text" placeholder="Last Name" name="last_name" value={this.state.last_name} onChange={this.handleChange} />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
+              </Form.Group>
+              <FormButton variant="primary" type="submit">Submit</FormButton>
+            </Form>
+          </FormPaper>
+        </FormDiv>
+      </Page>
+    );
+  }
 }
+
+const FormHeader = styled.h1`
+  font-weight: lighter;
+  font-size: 4em;
+`;
+
+const FormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+`;
+
+const FormButton = styled.button`
+  font-weight: lighter;
+  font-size: 1em;
+  padding: 10px 20px 10px 20px;
+  background-color: #B8D8D8;
+  border-style: solid;
+  border-color: lightblue;
+  border-radius: 5px;
+`;
+
+const Page = styled.div`
+  background-color: white;
+`;
+
+const FormPaper = styled.div`
+  background-color: #F7F7FF;
+  padding: 50px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 30px;
+  border-color: #343a40;
+  text-align: center;
+`;
+
+// const Tile = styled.div`
+//   background-color: #343a40;
+//   padding: 5px;
+//   border-radius: 10px;
+//   margin-bottom: 10px;
+// `;
+
+function msp(state) {
+  return {
+    user: state.user,
+    interface: state.interface
+  }
+}
+
+export default connect(msp, { toggleDarkMode, createAccount })(SignIn)

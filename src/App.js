@@ -1,17 +1,26 @@
 import React from 'react';
 import Main from './containers/Main';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toggleDarkMode, createAccount } from './actions/actions.js';
 
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-          <Main />
-      </div>
-    </Router>
+    <div className="App">
+      <Router>
+        <Route path="/" component={Main} />
+      </Router>
+    </div>
   );
 }
 
-export default App;
+function msp(state) {
+  return {
+    user: state.user,
+    interface: state.interface
+  }
+}
+
+export default connect(msp, {toggleDarkMode, createAccount})(App);
