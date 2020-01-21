@@ -3,7 +3,7 @@ import Landing from '../components/Landing';
 import SignIn from '../components/SignIn';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { toggleDarkMode, signIn } from '../actions/actions.js';
+import { toggleDarkMode, createAccount } from '../actions/actions.js';
 
 class Main extends Component {
 
@@ -13,8 +13,8 @@ class Main extends Component {
 		}
 	}
 
-	userSignIn = (email, password) => {
-		this.props.signIn(email, password)
+	userSignIn = (account) => {
+		this.props.createAccount(account)
 	}
 
 	renderSignIn = () => {
@@ -35,7 +35,6 @@ class Main extends Component {
 	} 
 
 	render() {
-		console.log('here')
 		return (
 			<div>
 				<Switch>
@@ -55,4 +54,4 @@ function msp(state) {
 	}
 }
 
-export default connect(msp, {toggleDarkMode, signIn})(withRouter(Main));
+export default connect(msp, {toggleDarkMode, createAccount})(withRouter(Main));

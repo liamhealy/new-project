@@ -4,33 +4,17 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// material-ui stuff
-// import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-// import { orange, purple, green } from '@material-ui/core/colors';
-
 // redux stuff
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers/reducer.js'; 
 
-// const theme = createMuiTheme({
-//     palette: {
-//         primary: orange,
-//         secondary: green,
-//     },
-//     status: {
-//         danger: purple,
-//     },
-// });
-
 const store = createStore(reducer);
 
 ReactDOM.render(
-    // <ThemeProvider theme={theme}>
-        <Provider store={store}>
-            <App />
-        </Provider>,
-    // </ThemeProvider>,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('root')
 );
 

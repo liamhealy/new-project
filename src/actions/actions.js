@@ -1,5 +1,5 @@
-export function signIn(email, password) {
-    return {type: "SIGN_IN", payload: { email, password }}
+export function createAccount(account) {
+    return {type: "CREATE_ACCOUNT", payload: account}
 }
 
 export function toggleDarkMode() {

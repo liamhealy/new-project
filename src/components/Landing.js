@@ -1,14 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { toggleDarkMode, signIn } from '../actions/actions.js';
+import Navigation from './Navigation';
+// import { connect } from 'react-redux';
+// import { toggleDarkMode, signIn } from '../actions/actions.js';
 
-function Landing(props) {
-  console.log(props);
-  return (
-    <h1>
-      Landing
-    </h1>
-  );
+class Landing extends React.Component {
+  render() {
+    return (
+      <>
+        <Navigation />
+      </>
+    );
+  }
 }
 
 export default Landing;
